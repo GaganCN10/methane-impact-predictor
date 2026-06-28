@@ -63,6 +63,22 @@ app.post('/api/predict', (req, res) => {
     const agr_val = agr !== undefined ? Number(agr) : 10.0;
     const investment_val = investment !== undefined ? Number(investment) : 1.0;
 
+    // Direct JS execution on Vercel to bypass slow subprocess spawning and missing python binary errors
+    if (process.env.VERCEL) {
+        try {
+            const prediction = calculatePredictions(ch4_val, gdp_val, growth_val, agr_val, investment_val);
+            return res.json({
+                act_now_loss: prediction.total_loss_act,
+                donot_act_loss: prediction.total_loss_bau,
+                hidden_tax: prediction.total_hidden_tax,
+                yearly: prediction.yearly || []
+            });
+        } catch (jsErr) {
+            console.error("JS prediction on Vercel failed:", jsErr);
+            return res.status(500).json({ error: "Failed to execute prediction model" });
+        }
+    }
+
     let options = {
         mode: 'json',
         pythonPath: 'python', // Use active python env
