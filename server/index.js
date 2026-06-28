@@ -8,6 +8,8 @@ app.use(express.json());
 
 app.use('/api/data', graphRoutes);
 
+const { PythonShell } = require('python-shell');
+
 // Pure Javascript fallback calculation of server/ml/predict.py
 function calculatePredictions(ch4, gdp, growth, agr, investment, years = 10) {
     const LOSS_PER_MT_USD_BN = 2.1;
