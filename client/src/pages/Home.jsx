@@ -5,7 +5,7 @@ import {
     BarChart, Bar, Legend, LineChart, Line
 } from 'recharts';
 import { GraphCard } from '../components/GraphCard';
-import { BarChart3, Globe, Zap, Activity } from 'lucide-react';
+import { BarChart3, Globe, Activity } from 'lucide-react';
 
 import graph5Img from '../assets/graph5_ch4_vs_temp.png';
 import graph3Img from '../assets/graph3_top15_countries.png';
